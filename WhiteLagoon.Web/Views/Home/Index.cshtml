@@ -1,8 +1,88 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using System.Globalization
+@model WhiteLagoon.Web.ViewModels.HomeVm;
+
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container py-3">
+            <h1 class="jumbotron-heading">Find Your Booking</h1>
+            <p class="lead text-muted"> Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+            <form class="form-inline" asp-Controller="Home" asp-action="CheckAvialabilityByDate" id="form-villa-book">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control"  name="CheckInDate" placeholder="Check-In Date" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control"  name="CheckOutDate" placeholder="Check-Out Date" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control occupancy-icon" placeholder="Occupancy" name="Occupancy" >
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-link"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>  
+
+    <partial name="_VillaShowCase" model="Model"  >
+   
+   
+
+</main>
+
+
+<style>
+
+    .occupancy-icon{
+        border-color: #28a745; 
+        background-repeat:none;
+        padding-right: 25px;
+        padding-left: 10px;
+        background-repeat:no-repeat;
+        background-image: url('icons\\people-fill.svg' );
+        background-position: right center;
+    }
+
+ </style>
+
+
+@section Scripts {
+    <script>
+            var formBtn =  document.querySelector('#form-villa-book');
+            let CheckInDate = document.getElementsByName('#CheckInDate');
+            let CheckOutDate = document.getElementsByName('#CheckOutDate');
+            let Occupancy = document.getElementsByName('#Occupancy');
+             
+
+            formBtn.addEventListener('submit',(e)=>{
+             e.preventDefault();
+            $('.spinner').show();
+                $.ajax({
+                    type : 'POST',
+                    data : {
+                        CheckInDate : $('CheckInDate').val(),
+                        CheckOutDate : $('CheckOutDate').val(),
+                        Occupancy : $('Occupancy').val()
+                    },
+                    url : '/Home/CheckAvialabilityByDate',
+                    success:(data) =>{
+                        debugger;
+                        $('.spinner').hide();
+                        $('#villa-showcase').empty();
+                        $('#villa-showcase').html(data);
+                        console.log(data);
+                    },
+                    error: (data)=>{
+
+                    }
+                })
+           
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>

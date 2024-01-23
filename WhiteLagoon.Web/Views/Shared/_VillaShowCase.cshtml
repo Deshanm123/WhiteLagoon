@@ -1,0 +1,43 @@
+﻿@using System.Globalization
+@model WhiteLagoon.Web.ViewModels.HomeVm;
+
+<div class="album py-5 bg-light" id="villa-showcase">
+    <div class="container">
+
+        <div class="row">
+            @foreach (var villaItem in Model.Villas)
+            {
+                @* showcaseitem *@
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="p-0" src="@villaItem.ImageUrl" alt=$"Thumbnail-of-{@villaItem.Name}" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
+                        <div class="card-body">
+                            <h5>
+                                @villaItem.Name
+                            </h5>
+                            <p class="card-text">@villaItem.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-">View</button>
+                                </div>
+                                <small><i class="bi bi-people-fill"></i> @villaItem.Occupancy</small>
+                                <small class="text-muted">@villaItem.Price.ToString("C", new CultureInfo("en-GB")) per Night per Person</small>
+                            </div>
+                        </div>
+                        @if (villaItem.Id % 2 == 0)
+                        {
+                            <button type="button" class="btn btn-success btn-lg btn-block rounded-0 py-1">Book Now</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-danger btn-lg btn-block rounded-0 py-1" disabled>Booked</button>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+

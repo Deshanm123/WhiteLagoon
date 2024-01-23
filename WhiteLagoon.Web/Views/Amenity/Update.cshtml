@@ -1,0 +1,36 @@
+﻿@model WhiteLagoon.Web.ViewModels.AmenityVm
+
+<h1>Update selected Amnity</h1>
+
+<form type="Post" asp-controller="Amenity" asp-action="Update">
+    <input type="hidden" asp-for="@Model.Id" />
+    <div class="form-group" asp-controller="">
+        <label>Name</label>
+        <input type="text" class="form-control" asp-for="@Model.Name">
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" class="form-control" asp-for="@Model.Description">
+    </div>
+    @* <div class="form-group">
+    <label for="Description">Villa Id</label>
+    <input type="text" class="form-control" id="VillaId" name="VillaId">
+    </div> *@
+
+    <div class="form-group">
+        <label for="VillaId">Please Select Villa</label>
+        <Select asp-for="@Model.VillaId" class="form-control">
+            Please Select Villa From Below
+            <option value="">please select</option>
+            @foreach (var item in Model.VillaSelectList)
+            {
+                <option value="@item.Value" class="dropdown-item">@item.Text</option>
+            }
+        </Select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Update</button>
+
+</form>
+<a asp-controller="Amenity" asp-action="Index" class="btn btn-block btn-secondary">Back</a>

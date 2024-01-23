@@ -1,32 +1,78 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Diagnostics;
+using WhiteLagoon.Application.Common.Interfaces;
+using WhiteLagoon.Domain.Entities;
 using WhiteLagoon.Web.Models;
+using WhiteLagoon.Web.ViewModels;
 
 namespace WhiteLagoon.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            HomeVm homevm = new HomeVm();
+            homevm.Villas = _unitOfWork.Villa.GetAll();
+            return View(homevm);
         }
 
-        public IActionResult Privacy()
+        public Villa MarkVillaAvialabilityDate(Villa villa, DateOnly? checkInDate, DateOnly? checkOutDate)
         {
-            return View();
+            if (checkInDate > checkOutDate || checkInDate < DateOnly.FromDateTime(DateTime.Now) || checkOutDate <= DateOnly.FromDateTime(DateTime.Now))
+            {
+                villa.IsAvialable = false;
+            }
+            else
+            {
+                villa.IsAvialable = true;
+            }
+            return villa;
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult CheckAvialabilityByDate(HomeVm homeVm)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var villaList = _unitOfWork.Villa.GetAll();
+            foreach (var villa in villaList)
+            {
+                if (villa.Occupancy >= homeVm.Occupancy)
+                {
+                    MarkVillaAvialabilityDate(villa, homeVm.CheckInDate, homeVm.CheckOutDate);
+                }
+                else
+                {
+                    //villa 
+                    villa.IsAvialable = false;
+                }
+            }
+            homeVm.Villas = villaList;
+            //homeVm.CheckInDate = checkInDate;
+            //homeVm.CheckOutDate = checkOutDate;
+            return PartialView("_VillaShowCase", homeVm);
         }
+
+        //During bookinb past days should be mentioned as sold out and future dates are as available
+
+
+
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
+
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View();
+        //}
+
     }
+    
 }

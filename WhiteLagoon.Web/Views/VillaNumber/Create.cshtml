@@ -1,0 +1,67 @@
+﻿@model WhiteLagoon.Web.ViewModels.VillaNumberVm;
+
+
+
+<div class="container">
+    <div class="card-header bg-success bg-gradient py-3">
+        <div class="row">
+            <div class="text-center">
+                <h2 class="text-white py-2">Assigned a Villa number to Villa</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <form class="form" asp-controller="VillaNumber" asp-action="Create">
+
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="form-group">
+            <label asp-for="villaNumber.VillaId" class="col-sm-2 col-form-label">Please Select</label>
+            <select asp-for="villaNumber.VillaId" id="villaNameDropDown" class="form-control">
+                <option  selected disabled>please select Villa</option>
+                @if (@Model.villaNameDropDown != null)
+                {
+                    @foreach (var villaItem in @Model.villaNameDropDown)
+                    {
+                        <option value="@villaItem.Value">@villaItem.Text</option>
+                    }
+                }
+            </select>
+
+            <span asp-for="villaNameDropDown" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="villaNumber.Villa_Number" class="col-sm-2 col-form-label"></label>
+            <input asp-for="villaNumber.Villa_Number" class="form-control">
+            <span asp-validation-for="villaNumber.Villa_Number" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="villaNumber.SpecialDetails" class="col-sm-2 col-form-label"></label>
+            <textarea asp-for="villaNumber.SpecialDetails" rows="3" class="form-control"></textarea>
+            <span asp-validation-for="villaNumber.SpecialDetails" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group py-3 row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success btn-block d-flex justify-content-start">Submit</button>
+            </div>
+            <div class="col-md-7">
+            </div>
+            <div class="col-md-1">
+                <a href="@Url.ActionLink("Index","VillaNumber")" class="btn btn-block btn-secondary btn-block d-flex justify-content-end">Back</a>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+ @section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

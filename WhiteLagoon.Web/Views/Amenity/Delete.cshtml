@@ -1,0 +1,27 @@
+﻿@model WhiteLagoon.Web.ViewModels.AmenityVm;
+
+<form asp-controller="Amenity" asp-action="DeleteAmenity" asp-route-Id="@Model.Id">
+    <input asp-for="@Model.Id"  hidden/>
+    <div class="form-group" asp-controller="">
+        <label asp-for="@Model.Name">Name</label>
+        <input type="text" class="form-control" asp-for="@Model.Name" disabled>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Description">Description</label>
+        <input type="text" class="form-control" asp-for="@Model.Description"  disabled />
+    </div>
+    <div class="form-group">
+        <label for="@Model.VillaId">Please Select Villa</label>
+        <Select asp-for="@Model.VillaId" class="form-control" disabled>
+            Please Select Villa From Below
+            <option value="">please select</option>
+            @foreach (var item in Model.VillaSelectList)
+            {
+                <option value="@item.Value" class="dropdown-item">@item.Text</option>
+            }
+        </Select>
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+
+</form>
+<a asp-controller="Amenity" asp-action="Index" class="btn btn-block btn-secondary">Back</a>

@@ -1,0 +1,72 @@
+﻿@model WhiteLagoon.Domain.Entities.Villa;
+<div class="container">
+    <div class="card-header bg-success bg-gradient py-3">
+        <div class="row">
+            <div class="text-center">
+                <h2 class="text-white py-2">Create Villa</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <form class="form" asp-controller="Villa" asp-action="Create" enctype="multipart/form-data">
+
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="form-group">
+            <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+            <textarea asp-for="Description" rows="3" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price" class="col-sm-2 col-form-label"></label>
+            <input asp-for="Price" class="form-control">
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SqFt" class="col-sm-2 col-form-label"></label>
+            <input asp-for="SqFt" class="form-control">
+            <span asp-validation-for="SqFt" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Occupancy" class="col-sm-2 col-form-label"></label>
+            <input asp-for="Occupancy" class="form-control">
+            <span asp-validation-for="Occupancy" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageUrl" class="col-sm-2 col-form-label"></label>
+             <input hidden asp-for="ImageUrl" class="form-control">
+             <input  type="file" accept="image/*" asp-for="VillaImage" class="form-control border-shadow"/>
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <div class="form-group py-3 row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success btn-block d-flex justify-content-start">Submit</button>
+            </div>
+            <div class="col-md-7">
+            </div>
+            <div class="col-md-1">
+                <a href="@Url.ActionLink("Index","Villa")" class="btn btn-block btn-secondary btn-block d-flex justify-content-end">Back</a>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+ @section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WhiteLagoon.Domain.Entities
+
+@inject SignInManager<AppUser> signInManager
+@inject UserManager<AppUser>  userManager
+
+<ul class="navbar-nav ms-auto">
+    @if (signInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <p class="nav-link"> Hello! @User.Identity.Name</p>
+            @* @UserManager.GetUserName(User); *@
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="LogOut">Log Out</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>
