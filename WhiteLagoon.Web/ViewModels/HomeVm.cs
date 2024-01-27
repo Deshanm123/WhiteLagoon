@@ -8,7 +8,7 @@ namespace WhiteLagoon.Web.ViewModels
         public IEnumerable<Villa> Villas { get; set; }
 
         [Required]
-        [Range(0,int.MaxValue)]
+        [Range(0,8)]
         public int Occupancy { get; set; }
         public DateOnly? CheckInDate { get; set; } 
         public DateOnly? CheckOutDate { get; set; } 

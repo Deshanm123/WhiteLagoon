@@ -50,39 +50,8 @@
 
 
 @section Scripts {
-    <script>
-            var formBtn =  document.querySelector('#form-villa-book');
-            let CheckInDate = document.getElementsByName('#CheckInDate');
-            let CheckOutDate = document.getElementsByName('#CheckOutDate');
-            let Occupancy = document.getElementsByName('#Occupancy');
-             
-
-            formBtn.addEventListener('submit',(e)=>{
-             e.preventDefault();
-            $('.spinner').show();
-                $.ajax({
-                    type : 'POST',
-                    data : {
-                        CheckInDate : $('CheckInDate').val(),
-                        CheckOutDate : $('CheckOutDate').val(),
-                        Occupancy : $('Occupancy').val()
-                    },
-                    url : '/Home/CheckAvialabilityByDate',
-                    success:(data) =>{
-                        debugger;
-                        $('.spinner').hide();
-                        $('#villa-showcase').empty();
-                        $('#villa-showcase').html(data);
-                        console.log(data);
-                    },
-                    error: (data)=>{
-
-                    }
-                })
-           
-        });
-    </script>
-
+    
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/villa-book.js"></script>
 }
 

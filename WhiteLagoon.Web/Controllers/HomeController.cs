@@ -37,9 +37,18 @@ namespace WhiteLagoon.Web.Controllers
             return villa;
         }
 
-        public IActionResult CheckAvialabilityByDate(HomeVm homeVm)
+        public IActionResult CheckAvialabilityByDate(string CheckInDate , string CheckOutDate, int Occupancy)
         {
-            var villaList = _unitOfWork.Villa.GetAll();
+            HomeVm homeVm = new HomeVm();
+
+            homeVm.CheckInDate = DateOnly.Parse(CheckInDate);
+            homeVm.CheckOutDate = DateOnly.Parse(CheckOutDate);
+
+            homeVm.Occupancy = Occupancy;
+
+            var villaList = _unitOfWork.Villa.GetAll(villa => villa.Occupancy > Occupancy);
+            homeVm.Villas = villaList;
+
             foreach (var villa in villaList)
             {
                 if (villa.Occupancy >= homeVm.Occupancy)
@@ -52,9 +61,7 @@ namespace WhiteLagoon.Web.Controllers
                     villa.IsAvialable = false;
                 }
             }
-            homeVm.Villas = villaList;
-            //homeVm.CheckInDate = checkInDate;
-            //homeVm.CheckOutDate = checkOutDate;
+           
             return PartialView("_VillaShowCase", homeVm);
         }
 
