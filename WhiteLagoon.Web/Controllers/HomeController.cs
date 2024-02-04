@@ -20,7 +20,7 @@ namespace WhiteLagoon.Web.Controllers
         public IActionResult Index()
         {
             HomeVm homevm = new HomeVm();
-            homevm.Villas = _unitOfWork.Villa.GetAll();
+            homevm.Villas = _unitOfWork.Villa.GetAll(includeProperties:"VillaAmenities");
             return View(homevm);
         }
 

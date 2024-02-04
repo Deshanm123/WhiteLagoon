@@ -37,6 +37,7 @@ namespace WhiteLagoon.Domain.Entities
         [NotMapped]
         public bool IsAvialable { get; set; }
 
-
+        // Navigation property
+        public virtual ICollection<Amenity> VillaAmenities { get; set; }
     }
 }
