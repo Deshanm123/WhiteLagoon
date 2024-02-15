@@ -93,6 +93,7 @@ namespace WhiteLagoon.Web.Controllers
                         var roleName = await _roleManager.FindByIdAsync(registerVm.Role.ToString());
                         if (roleName != null) 
                          await _userManager.AddToRoleAsync(newUser, roleName.ToString());
+                        else
                         ModelState.AddModelError("", "User role not found");
                     }
                     else
@@ -116,11 +117,10 @@ namespace WhiteLagoon.Web.Controllers
                 foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors)) {
                     ModelState.AddModelError("", error.ToString());
                 }
-                RegisterVm userRegisterVm = new RegisterVm()
-                {
-                    RoleSelectList = _roleManager.Roles.Select(role => new SelectListItem { Text = role.Name, Value = role.Id })
-                                                     .ToList()
-                };
+
+                registerVm.RoleSelectList = _roleManager.Roles.Select(role => new SelectListItem { Text = role.Name, Value = role.Id.ToString() })
+                                                       .ToList();
+                
             }
                 return View(registerVm);
 
