@@ -18,6 +18,7 @@ namespace WhiteLagoon.Infrastructure.Repository
         public IVillaNumberRepository VillaNumber { get; set; }
         public IAmenityRepository Amenity { get; set; }
         public IBookingRepository Booking { get; set; }
+        public IAppUserRepository AppUser { get; set; }
         //The unit of work class serves one purpose:
         //to make sure that when you use multiple repositories, they share a single database context.
         public UnitOfWork(ApplicationDbContext context)
@@ -27,6 +28,7 @@ namespace WhiteLagoon.Infrastructure.Repository
             VillaNumber = new VillaNumberRepository(context);
             Amenity = new AmenityRepository(context);
             Booking = new BookingRepository(context);
+            AppUser = new AppUserRepository(context);
         }
 
     }

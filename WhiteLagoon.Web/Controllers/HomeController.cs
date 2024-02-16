@@ -43,7 +43,6 @@ namespace WhiteLagoon.Web.Controllers
 
             homeVm.CheckInDate = DateOnly.Parse(CheckInDate);
             homeVm.CheckOutDate = DateOnly.Parse(CheckOutDate);
-
             homeVm.Occupancy = Occupancy;
 
             var villaList = _unitOfWork.Villa.GetAll(villa => villa.Occupancy > Occupancy);
@@ -61,7 +60,6 @@ namespace WhiteLagoon.Web.Controllers
                     villa.IsAvialable = false;
                 }
             }
-           
             return PartialView("_VillaShowCase", homeVm);
         }
 

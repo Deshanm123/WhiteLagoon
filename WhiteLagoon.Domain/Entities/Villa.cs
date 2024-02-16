@@ -35,7 +35,7 @@ namespace WhiteLagoon.Domain.Entities
         public DateTime? UpdatedDate { get; set; } = DateTime.Now;
 
         [NotMapped]
-        public bool IsAvialable { get; set; }
+        public bool IsAvialable { get; set; } = true;
 
         // Navigation property
         public virtual ICollection<Amenity> VillaAmenities { get; set; }

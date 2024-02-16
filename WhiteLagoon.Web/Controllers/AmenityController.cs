@@ -147,7 +147,6 @@ namespace WhiteLagoon.Web.Controllers
                 TempData["success"] = $"You have successfully Deleted {selectedAmenity.Name}";
                 return RedirectToAction("Index", "Amenity");
             }
-
             TempData["error"] = $"Error ! Delete Failed. The selected Amenity is missing.";
             return RedirectToAction("Index", "Amenity");
         }

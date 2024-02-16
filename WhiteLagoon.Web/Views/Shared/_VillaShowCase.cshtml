@@ -33,7 +33,7 @@
                         </div>
                         @if (villaItem.Id % 2 == 0)
                         {
-                            @Html.ActionLink("Book", "FinalizeBooking", "Booking", new { villaId = @villaItem.Id, checkInDate = Model.CheckInDate, checkOutDate = Model.CheckOutDate }, htmlAttributes: new { @class = "btn btn-success btn-lg btn-block rounded-0 py-1" })
+                            @Html.ActionLink("Book", "FinalizeBooking", "Booking", new { villaId = @villaItem.Id, checkInDate = @Model.CheckInDate, checkOutDate = @Model.CheckOutDate }, htmlAttributes: new { @class = "btn btn-success btn-lg btn-block rounded-0 py-1" })
                         }
                         else
                         {

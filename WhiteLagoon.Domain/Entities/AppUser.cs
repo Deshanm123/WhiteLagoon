@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WhiteLagoon.Domain.Entities
 {
-    public class  AppUser :IdentityUser
+    public class  AppUser : IdentityUser 
     {
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }

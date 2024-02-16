@@ -14,5 +14,9 @@ namespace WhiteLagoon.Application.Common.Utility
             Customer
         }
        
+        //public enum BookingStatus
+        //{
+        //    public const string StatusPending = "pending",
+        //}
     }
 }
