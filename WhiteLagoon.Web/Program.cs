@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using System.Net.Sockets;
 using WhiteLagoon.Application.Common.Interfaces;
 using WhiteLagoon.Domain.Entities;
@@ -42,6 +43,9 @@ builder.Services.ConfigureApplicationCookie(option =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
+
+//initiaiting stripe payment
+StripeConfiguration.ApiKey = builder.Configuration.GetValue<string>("Stripe:SecretKey");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

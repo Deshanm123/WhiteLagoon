@@ -53,10 +53,12 @@ namespace WhiteLagoon.Domain.Entities
         public bool IsPaymentSuccessful { get; set; } = false;
         public DateTime PaymentDate { get; set; } 
 
-        //stripe payment integration
+        //start of stripe payment integration
         public string? StripesSessionId { get; set; }
-        public string? StripePaymentIntentId { get; set; }
 
+        //Stripe paymentIntentId can be used to uniquely identify the transaction;then it can be used refund process
+        public string? StripePaymentIntentId { get; set; }
+        //end of stripe payment integration
 
         public DateTime ActualCheckingDate { get; set; }
         public DateTime ActualCheckOutDate { get; set; }
