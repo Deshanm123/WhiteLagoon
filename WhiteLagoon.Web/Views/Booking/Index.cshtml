@@ -1,0 +1,40 @@
+﻿ @* <a  asp-Controller="Booking" asp-action="Create" class="btn btn-block btn-primary">Create New Amnity</a> *@
+
+<div class="container">
+
+    <table id="booking-data-table" class="table table-responsive">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col" class="col-4">Phone</th>
+            <th scope="col" class="col-4">Email</th>
+            <th scope="col" class="col-4">Status</th>
+            <th scope="col" class="col-4">Check In Date</th>
+            <th scope="col" class="col-4">Check Out Date</th>
+            @* .<th scope="col" class="col-4">Total</th> *@
+            @* <th scope="col" class="col-4"></th> *@
+           
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>
+                    <a asp-controller="Amenity" asp-action="Update" asp-route-amenityId="@item.Id" class="px-3"><i class="bi bi-pencil"></i></a>
+                    <a asp-controller="Amenity" asp-action="Delete" asp-route-amenityId="@item.Id" class="px-3"><i class="bi bi-trash"></i></a>
+                </td
+
+            </tr>
+        } *@
+    </tbody>
+
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/datatable-booking.js"></script>
+}

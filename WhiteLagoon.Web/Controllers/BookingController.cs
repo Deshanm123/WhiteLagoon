@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using System.Security.Claims;
+using System.Text.Json;
 using WhiteLagoon.Application.Common.Interfaces;
 using WhiteLagoon.Application.Common.Utility;
 using WhiteLagoon.Domain.Entities;
+using static WhiteLagoon.Application.Common.Utility.Enum;
 
 namespace WhiteLagoon.Web.Controllers
 {
@@ -15,6 +17,13 @@ namespace WhiteLagoon.Web.Controllers
         public BookingController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+        
+        
+        [Authorize]
+        public IActionResult Index()
+        {
+            return View("Index");
         }
 
         [Authorize]
@@ -121,5 +130,33 @@ namespace WhiteLagoon.Web.Controllers
             }
             return View(bookingId);
         }
+
+
+
+
+        #region ApiEndCalls
+        [HttpGet]
+       [Authorize]
+        public IActionResult GetAllBookings()
+        {
+            IEnumerable<Booking> bookings = null;
+            if (User.IsInRole(UserRoles.Admin.ToString()))
+            {
+                bookings = _unitOfWork.Booking.GetAll(includeProperties:"Villa,AppUser");
+            }
+            if (User.IsInRole(UserRoles.Customer.ToString()))
+            {
+
+                var claimIdentityInstance = (ClaimsIdentity)User.Identity;
+                string loggedUserId = claimIdentityInstance.FindFirst(ClaimTypes.NameIdentifier).Value;
+                bookings = _unitOfWork.Booking.GetAll(booking => booking.UserId == loggedUserId, includeProperties: "Villa,AppUser");
+
+            }
+          //  var jsonResultBooks =  JsonSerializer.Serialize<IEnumerable<Booking>>(bookings);
+            //return Ok(jsonResultBooks);
+            return Json(new {data= bookings });
+        }
+
+        #endregion
     }
 }
