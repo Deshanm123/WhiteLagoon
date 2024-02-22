@@ -35,7 +35,7 @@ namespace WhiteLagoon.Infrastructure.Repository
             {
                 query = query.Where(filter);
             }
-            else if (!string.IsNullOrEmpty(includeProperties))
+            if (!string.IsNullOrEmpty(includeProperties))
             {
                 var includePropertiesList = includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 foreach (var property in includePropertiesList)
@@ -53,7 +53,7 @@ namespace WhiteLagoon.Infrastructure.Repository
             {
                 query = query.Where(filter);
             }
-            else if(!string.IsNullOrEmpty(includeProperties))
+            if(!string.IsNullOrEmpty(includeProperties))
             {
                 var includePropertiesList = includeProperties.Split(",", StringSplitOptions.RemoveEmptyEntries);
                 foreach(var includeProperty in includePropertiesList)

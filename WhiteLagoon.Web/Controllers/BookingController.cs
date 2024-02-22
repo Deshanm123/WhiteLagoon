@@ -130,6 +130,14 @@ namespace WhiteLagoon.Web.Controllers
             }
             return View(bookingId);
         }
+        
+        [Authorize]
+        //confirm payment is successfull and update that on db
+        public IActionResult BookingDetails(int bookingId )
+        {
+            Booking booking = _unitOfWork.Booking.Get(booking => booking.Id == bookingId,includeProperties:"SelectedVilla");
+            return View(booking);
+        }
 
 
 
@@ -137,24 +145,26 @@ namespace WhiteLagoon.Web.Controllers
         #region ApiEndCalls
         [HttpGet]
        [Authorize]
-        public IActionResult GetAllBookings()
+        public IActionResult GetAllBookings(string? status )
         {
+            if (string.IsNullOrEmpty(status) || status == "null")
+            {
+                status = BookingStatus.StatusPending.ToString();
+            }
             IEnumerable<Booking> bookings = null;
             if (User.IsInRole(UserRoles.Admin.ToString()))
             {
-                bookings = _unitOfWork.Booking.GetAll(includeProperties:"Villa,AppUser");
+                bookings = _unitOfWork.Booking.GetAll(b => b.Status == status,includeProperties:"User");
             }
             if (User.IsInRole(UserRoles.Customer.ToString()))
             {
 
                 var claimIdentityInstance = (ClaimsIdentity)User.Identity;
                 string loggedUserId = claimIdentityInstance.FindFirst(ClaimTypes.NameIdentifier).Value;
-                bookings = _unitOfWork.Booking.GetAll(booking => booking.UserId == loggedUserId, includeProperties: "Villa,AppUser");
+                bookings = _unitOfWork.Booking.GetAll(booking => booking.UserId == loggedUserId && booking.Status == status, includeProperties: "User");
 
             }
-          //  var jsonResultBooks =  JsonSerializer.Serialize<IEnumerable<Booking>>(bookings);
-            //return Ok(jsonResultBooks);
-            return Json(new {data= bookings });
+            return Json(new { data = bookings });
         }
 
         #endregion

@@ -1,7 +1,37 @@
 ﻿ @* <a  asp-Controller="Booking" asp-action="Create" class="btn btn-block btn-primary">Create New Amnity</a> *@
+ @using  WhiteLagoon.Application.Common.Utility;
 
 <div class="container">
+        <div class="row justify-content-between">
+            <div class="d-flex justify-content-between pb-4 pt-2">
+            <div class="col-5">Status</div>
+            <div class="col-7">
+                <ul class="list-group list-group-horizontal-sm">
+                    <a asp-controller="Booking" asp-action="Index" asp-route-status="@BookingStatus.StatusPending" style="text-decoration:none;">
+                         <li class="list-group-item btn btn-primary"> @BookingStatus.StatusPending </li>
+                     </a>
+                      <a asp-controller="Booking" asp-action="Index" asp-route-status="@BookingStatus.StatusApproved" style="text-decoration:none;">
+                         <li class="list-group-item btn btn-primary"> @BookingStatus.StatusApproved </li>
+                     </a>
+                    <a asp-controller="Booking" asp-action="Index" asp-route-status="@BookingStatus.StatusCompleted" style="text-decoration:none;">
+                         <li class="list-group-item btn btn-primary"> @BookingStatus.StatusCompleted </li>
+                     </a>
+                      <a asp-controller="Booking" asp-action="Index" asp-route-status="@BookingStatus.StatusCheckedIn" style="text-decoration:none;">
+                         <li class="list-group-item btn btn-primary"> @BookingStatus.StatusCheckedIn </li>
+                     </a>
+                    <a asp-controller="Booking" asp-action="Index" asp-route-status="@BookingStatus.StatusCancelled" style="text-decoration:none;">
+                    <li class="list-group-item btn btn-primary"> @BookingStatus.StatusCancelled </li>
+                     </a>
+                    <a asp-controller="Booking" asp-action="Index" asp-route-status="@BookingStatus.StatusRefunded" style="text-decoration:none;">
+                            <li class="list-group-item btn btn-primary"> @BookingStatus.StatusRefunded </li>
+                    </a>
+                </ul>
+                    </div>
+            </div>
+            <div>
 
+            </div>
+    </div>
     <table id="booking-data-table" class="table table-responsive">
     <thead>
         <tr>
@@ -12,8 +42,8 @@
             <th scope="col" class="col-4">Status</th>
             <th scope="col" class="col-4">Check In Date</th>
             <th scope="col" class="col-4">Check Out Date</th>
-            @* .<th scope="col" class="col-4">Total</th> *@
-            @* <th scope="col" class="col-4"></th> *@
+            .<th scope="col" class="col-4">Total</th>
+             <th scope="col" class="col-4"></th>
            
         </tr>
     </thead>

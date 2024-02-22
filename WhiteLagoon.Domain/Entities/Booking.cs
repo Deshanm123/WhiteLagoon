@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -63,6 +64,16 @@ namespace WhiteLagoon.Domain.Entities
         public DateTime ActualCheckingDate { get; set; }
         public DateTime ActualCheckOutDate { get; set; }
         public int VillaNumber { get; set; }
+        [NotMapped]
+        public List<VillaNumber> VillaNumbers { get;set; }
+
+        //[ValidateNever]
+        //public Villa Villa { get; set; }
+
+
+        //[ValidateNever]
+        //public virtual ICollection<Amenity> VillaAmenities { get; set; }
+
 
     }
 }

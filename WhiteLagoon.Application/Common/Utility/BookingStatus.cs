@@ -8,7 +8,7 @@ namespace WhiteLagoon.Application.Common.Utility
 {
     public static class BookingStatus
     {
-        public const string StatusPending = "pending";
+        public const string StatusPending = "Pending";
         public const string StatusApproved = "Approved";
         public const string StatusCheckedIn = "CheckedIn";
         public const string StatusCompleted = "Completed";
