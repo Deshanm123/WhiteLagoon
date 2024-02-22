@@ -31,7 +31,7 @@
                                 <small class="text-muted">@villaItem.Price.ToString("C", new CultureInfo("en-GB")) per Night per Person</small>
                             </div>
                         </div>
-                        @if (villaItem.Id % 2 == 0)
+                        @if (villaItem.IsAvialable)
                         {
                             @Html.ActionLink("Book", "FinalizeBooking", "Booking", new { villaId = @villaItem.Id, checkInDate = @Model.CheckInDate, checkOutDate = @Model.CheckOutDate }, htmlAttributes: new { @class = "btn btn-success btn-lg btn-block rounded-0 py-1" })
                         }

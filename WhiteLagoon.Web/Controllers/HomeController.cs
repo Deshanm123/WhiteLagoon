@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Diagnostics;
 using WhiteLagoon.Application.Common.Interfaces;
+using WhiteLagoon.Application.Common.Utility;
 using WhiteLagoon.Domain.Entities;
 using WhiteLagoon.Web.Models;
 using WhiteLagoon.Web.ViewModels;
@@ -24,18 +25,7 @@ namespace WhiteLagoon.Web.Controllers
             return View(homevm);
         }
 
-        public Villa MarkVillaAvialabilityDate(Villa villa, DateOnly? checkInDate, DateOnly? checkOutDate)
-        {
-            if (checkInDate > checkOutDate || checkInDate < DateOnly.FromDateTime(DateTime.Now) || checkOutDate <= DateOnly.FromDateTime(DateTime.Now))
-            {
-                villa.IsAvialable = false;
-            }
-            else
-            {
-                villa.IsAvialable = true;
-            }
-            return villa;
-        }
+       
 
         public IActionResult CheckAvialabilityByDate(string CheckInDate , string CheckOutDate, int Occupancy)
         {
@@ -45,20 +35,23 @@ namespace WhiteLagoon.Web.Controllers
             homeVm.CheckOutDate = DateOnly.Parse(CheckOutDate);
             homeVm.Occupancy = Occupancy;
 
-            var villaList = _unitOfWork.Villa.GetAll(villa => villa.Occupancy > Occupancy);
-            homeVm.Villas = villaList;
-
-            foreach (var villa in villaList)
+            var villaCollection = _unitOfWork.Villa.GetAll(villa => villa.Occupancy > Occupancy);
+            if (villaCollection?.Any() == true)
             {
-                if (villa.Occupancy >= homeVm.Occupancy)
+                foreach (var villa in villaCollection)
                 {
-                    MarkVillaAvialabilityDate(villa, homeVm.CheckInDate, homeVm.CheckOutDate);
+                    if (BookingStatus.GetVillaWithAvaialability(villa, homeVm.Occupancy))
+                    {
+                        List<Booking> existingBookings = _unitOfWork.Booking.GetAll(b => b.VillaId == villa.Id).ToList();
+                        bool result = BookingStatus.GetVillaAvialabilityDate(existingBookings, homeVm.CheckInDate, homeVm.CheckOutDate);
+                        villa.IsAvialable = result;
+                    }
+                    else
+                    {
+                        villa.IsAvialable = false;
+                    }
                 }
-                else
-                {
-                    //villa 
-                    villa.IsAvialable = false;
-                }
+                homeVm.Villas = villaCollection;
             }
             return PartialView("_VillaShowCase", homeVm);
         }
