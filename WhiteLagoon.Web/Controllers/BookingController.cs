@@ -34,8 +34,7 @@ namespace WhiteLagoon.Web.Controllers
 
             AppUser loggedUser = _unitOfWork.AppUser.Get(user =>user.Id == userId);
 
-
-            Villa villa = _unitOfWork.Villa.Get(u => u.Id == villaId, includeProperties: "VillaAmenity");
+            Villa villa = _unitOfWork.Villa.Get(u => u.Id == villaId, includeProperties: "VillaAmenities");
             Booking booking = new Booking()
             {
                 VillaId = villaId,
