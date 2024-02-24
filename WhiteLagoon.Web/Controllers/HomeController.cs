@@ -35,7 +35,7 @@ namespace WhiteLagoon.Web.Controllers
             homeVm.CheckOutDate = DateOnly.Parse(CheckOutDate);
             homeVm.Occupancy = Occupancy;
 
-            var villaCollection = _unitOfWork.Villa.GetAll(villa => villa.Occupancy > Occupancy);
+            var villaCollection = _unitOfWork.Villa.GetAll(villa => villa.Occupancy > Occupancy, "VillaAmenities");
             if (villaCollection?.Any() == true)
             {
                 foreach (var villa in villaCollection)
