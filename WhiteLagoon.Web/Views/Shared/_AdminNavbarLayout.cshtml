@@ -1,0 +1,40 @@
+﻿@using WhiteLagoon.Domain.Entities
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+
+@{
+    var user = await _userManager.GetUserAsync(User);
+    var loggedEmail = "";
+    if(user != null)
+        loggedEmail = user.Email;
+    
+
+}
+
+<div class="container-fluid">
+<div class="d-flex flex-column flex-md-row align-items-center  border-bottom">
+    <a class="navbar-brand mr-auto" asp-area="" asp-controller="Dashboard" asp-action="Index">
+        <img src="~/img/Villaicon.png" height="55px" width="55px" alt="Villa-icon" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+     <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard </a>
+
+    <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @* UserName *@
+                        @loggedEmail
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+
+        @* <a class="py-2 text-dark text-decoration-none" href="#">Pricing</a> *@
+    </nav>
+</div>
+    </div>

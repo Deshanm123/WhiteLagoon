@@ -19,7 +19,6 @@ namespace WhiteLagoon.Web.Controllers
             _unitOfWork = unitOfWork;
         }
         
-        
         [Authorize]
         public IActionResult Index()
         {
@@ -57,6 +56,7 @@ namespace WhiteLagoon.Web.Controllers
         [Authorize]
         public IActionResult FinalizeBooking(Booking booking )
         {
+            //TODO : when finishng the booking check whether villa is available or not
             var selectedVilla = _unitOfWork.Villa.Get(villa => villa.Id == booking.VillaId);
             booking.Status = BookingStatus.StatusPending;
             booking.BookingDate = DateTime.Now;
@@ -135,9 +135,39 @@ namespace WhiteLagoon.Web.Controllers
         public IActionResult BookingDetails(int bookingId )
         {
             Booking booking = _unitOfWork.Booking.Get(booking => booking.Id == bookingId,includeProperties:"SelectedVilla");
-            return View(booking);
+             return View(booking);
         }
 
+
+        [HttpPost]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public IActionResult CheckInBooking(int bookingId)
+        {
+            _unitOfWork.Booking.UpdateBookingStatus(bookingId, BookingStatus.StatusCheckedIn);
+            _unitOfWork.Booking.Save();
+            TempData["success"] = "Booking has been checked In Successfully";
+           return RedirectToAction(nameof(BookingDetails), "Booking", new { bookingId = bookingId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public IActionResult CheckOutBooking(int bookingId)
+        {
+            _unitOfWork.Booking.UpdateBookingStatus(bookingId, BookingStatus.StatusCompleted);
+            _unitOfWork.Booking.Save();
+            TempData["success"] = "Booking has been checked out Successfully";
+            return RedirectToAction(nameof(BookingDetails), "Booking", new { bookingId = bookingId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = nameof(UserRoles.Admin))]
+        public IActionResult CancelBooking(int bookingId)
+        {
+            _unitOfWork.Booking.UpdateBookingStatus(bookingId, BookingStatus.StatusCancelled);
+            _unitOfWork.Booking.Save();
+            TempData["success"] = "Booking Cancellation Successfull";
+            return RedirectToAction(nameof(BookingDetails), "Booking", new { bookingId = bookingId });
+        }
 
 
 

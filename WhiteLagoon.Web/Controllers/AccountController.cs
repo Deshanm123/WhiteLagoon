@@ -135,11 +135,21 @@ namespace WhiteLagoon.Web.Controllers
                 var signInResult = await _signInManager.PasswordSignInAsync(loginVm.Email, loginVm.Password, loginVm.RememberMe, lockoutOnFailure: false);
                 if (signInResult.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(loginVm.RedirectionUrl))
+                    AppUser loggedUser = await _userManager.FindByEmailAsync(loginVm.Email);
+                    if (await _userManager.IsInRoleAsync(loggedUser, nameof(UserRoles.Admin)))
                     {
-                        return LocalRedirect(loginVm.RedirectionUrl);
+                        return RedirectToAction("Index", "Dashboard");
                     }
-                    return RedirectToAction("Index", "Home");
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(loginVm.RedirectionUrl))
+                        {
+                            return LocalRedirect(loginVm.RedirectionUrl);
+                        }
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                    
                 }
                 else
                 {

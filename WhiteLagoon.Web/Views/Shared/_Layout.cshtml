@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using static WhiteLagoon.Application.Common.Utility.Enum
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,19 +32,27 @@
                     <li class="nav-item active">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
                     </li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Resource Management
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-area="" asp-controller="Villa" asp-action="Index">Villa</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="VillaNumber" asp-action="Index">Villa Number</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-area="" asp-controller="Amenity" asp-action="Index">Amenities</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="Booking" asp-action="Index">Bookings</a>
-                        </div>
-                    </li>
+                    @if (User.IsInRole(nameof(UserRoles.Admin)))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Resource Management
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Villa" asp-action="Index">Villa</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="VillaNumber" asp-action="Index">Villa Number</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Amenity" asp-action="Index">Amenities</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Booking" asp-action="Index">Bookings</a>
+                            </div>
+                        </li>
+                    }else
+                    {
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="Index">Bookings </a>
+                        </li>
+                    }
+
                 </ul>
                 <partial name="_UserAccess" />
                

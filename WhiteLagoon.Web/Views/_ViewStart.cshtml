@@ -1,3 +1,15 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity;
+@using WhiteLagoon.Domain.Entities
+@using static WhiteLagoon.Application.Common.Utility.Enum
+
+
+@inject UserManager<AppUser> UserManager;
+
+@if (User.IsInRole(nameof(UserRoles.Admin)))
+{
+    Layout = "_LayoutAdmin";
+}
+else
+{
     Layout = "_Layout";
 }
