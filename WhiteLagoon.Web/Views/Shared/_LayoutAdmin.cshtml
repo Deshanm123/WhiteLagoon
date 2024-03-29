@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <link href="~/css/spinner.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" />
+    <link href="~/css/apexcharts.css" rel="stylesheet" />
     <style>
         .sidebar-sticky {
             position: -webkit-sticky;
@@ -113,6 +114,11 @@
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" asp-append-version="true"></script>
     @*  <script src="~/js/jquery.unobtrusive-ajax.min.js"></script> *@
     <script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
+    <script src="~/js/apexcharts/apexcharts.amd.js"></script>
+@*     <script src="~/js/apexcharts/apexcharts.common.js"></script>
+    <script src="~/js/apexcharts/apexcharts.esm.js"></script> *@
+    <script src="~/js/apexcharts/apexcharts.min.js"></script>
+    <script src="~/js/apexcharts/apexcharts.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
