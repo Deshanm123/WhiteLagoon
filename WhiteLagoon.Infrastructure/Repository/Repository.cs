@@ -28,13 +28,15 @@ namespace WhiteLagoon.Infrastructure.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null,bool dbTracking = false)
         {
-            IQueryable<T> query = _dbContext.Set<T>();
+            IQueryable<T> query = dbSet;
+            if (!dbTracking) dbSet.AsNoTracking();
             if(filter != null)
             {
                 query = query.Where(filter);
             }
+            
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 var includePropertiesList = includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -46,9 +48,10 @@ namespace WhiteLagoon.Infrastructure.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null,bool dbTracking = false)
         {
             IQueryable<T> query = _dbContext.Set<T>();
+            if(!dbTracking) query = dbSet.AsNoTracking();
             if(filter != null)
             {
                 query = query.Where(filter);

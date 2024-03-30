@@ -1,6 +1,6 @@
 ﻿namespace WhiteLagoon.Web.ViewModels
 {
-    public class RadialBarChartVm
+    public class RadialBarChartDTO
     {
         public string[] Labels { get; set; } = [];
        public string TotalCountLabel{ get; set; }

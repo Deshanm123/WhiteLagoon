@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Stripe;
 using System.Net.Sockets;
 using WhiteLagoon.Application.Common.Interfaces;
+using WhiteLagoon.Application.Services.Implementation;
+using WhiteLagoon.Application.Services.Interface;
 using WhiteLagoon.Domain.Entities;
 using WhiteLagoon.Infrastructure.Data;
 using WhiteLagoon.Infrastructure.Repository;
@@ -42,6 +44,8 @@ builder.Services.ConfigureApplicationCookie(option =>
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 var app = builder.Build();
 
 //initiaiting stripe payment
@@ -62,8 +66,19 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+seedingDatabase();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void seedingDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitilizer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitilizer.Initialize();
+    }
+}

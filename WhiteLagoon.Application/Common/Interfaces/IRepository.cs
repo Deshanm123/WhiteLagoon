@@ -14,8 +14,8 @@ namespace WhiteLagoon.Application.Common.Interfaces
     //   It means that the type implementing this interface must be a class or a class-derived type.
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null);
-        T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null, bool dbTracking = false);
+        T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool dbTracking = false);
         void Add(T entity);
         void Remove(T entity);
     }
